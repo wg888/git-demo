@@ -1,0 +1,203 @@
+jquery对象和DOM对象互转
+	jquery>DOM
+		jquery对象[索引]/get(索引)
+	DOM>jquery
+		$(DOM对象)
+		
+$(documnet).ready(function(){
+
+});
+
+$(function(){
+
+})
+
+
+
+
+基本,层次,过滤,表单
+基本选择器
+	标签/#id/.class/*/并集,/交集.
+层次选择器
+	儿子>:
+	后代:空格
+	下一个兄弟:+/next("过滤选择器")
+	之后所有兄弟:~/nextAll("过滤选择器")
+	上一个兄弟元素:prev()
+	上面的所有兄弟元素:prevAll()
+	siblings("过滤选择器"):同辈元素
+	parent():返回直接父元素
+	children("过滤选择器"):遍历父元素下的第一层子元素
+	find("选择器"):在父元素中查找子元素
+	
+过滤选择器
+	基本(数学)过滤选择器
+		:eq(index):等于,从0开始eq()
+		:not(选择器):选取不是的元素
+		:lt(index):大于
+		:gt(index):小于
+		:first:第一个元素first()
+		:last:最后一个元素
+		:odd(index):奇数
+		:even(index):偶数
+		:nth-child(index/even/odd/equation):选取父元素下的第index个元素。从1开始
+		
+	属性过滤选择器
+		[属性]
+		[属性=值]
+		[属性!=值]
+		[属性^=值]
+		[属性$=值]
+		[属性*=值]:包含这个值
+		[属性1][属性2][属性3]:含有多个属性，交集
+
+节点操作		
+	增加节点
+		append("追加的节点"):
+		prepend("在前面添加节点"):
+		after("追加兄弟节点"):
+		before("在前面添加兄弟节点"):
+	删除节点:remove([选择器])
+	复制节点:clone([true复制事件])
+	属性
+		attr("样式名称","值"):设置属性
+		attr("样式名称"):获取属性
+		removeAttr("样式名称"):移除属性
+		height()/width():获取高度
+		height("")/width(""):设置高度
+	内容
+		val("值"):获取/设置值
+		html("内容"):获取/设置html
+		text("内容"):获取/设置文本内容
+	
+	
+	样式操作
+		$("选择器").css("样式","值");
+		$("选择器").css({"样式1":"值1","样式2":"值2"});
+		$("选择器").css("样式",function(index,value){
+			return (index + 1)*10 +"px";
+		});
+		addClass("样式名字"):
+		removeClass(["样式名字"]):删除特定/全部样式
+		toggleClass("样式名称"):切换样式
+		hasClass("样式名称"):判断有没有样式
+		index():获取当前序号
+	
+
+		
+表单
+	focus(fun):获取焦点
+	blur(fun):失去焦点
+坐标值
+	offset():获取坐标值
+	offset({top:值,left:值}):设置坐标值
+	position():获取相对于父元素的坐标值
+滚动条位置
+	scrollTop():获取/设置滚动条位置
+	scrollLeft():获取/设置滚动条位置
+	
+	
+事件
+	bind({事件1:function1,事件2:function2}):绑定事件
+	bind("事件","数据"/{},function(e){}):
+	unbind():解绑事件
+	one("事件",function(){}):只绑定执行一次
+	delegate("标签","事件",function(){}):给父元素绑定事件，子元素就拥有该事件
+	undelegate():解绑事件
+	父元素.on("事件1 事件2","元素/选择器",fun(e)):
+	父元素.off("要解绑的事件"):
+	toggle(fn1,fn2,fn3...):对函数的轮番调用
+	
+	is(:visible):是否显示
+	mouseenter():光标进入指定元素
+	mouseleave():光标离开指定元素
+	mouseover(fun):
+	mouseout(fun):
+	
+	
+触发事件
+	trigger("事件/自定义函数"[,dataArr]):触发事件，且触发浏览器默认行为。不需要用户操作即可执行
+	triggerHandler("事件"):触发事件，不触发浏览器默认行为
+
+event.target:事件触发源，不一定===this	
+event.currentTarget:在事件响应方法中等于this,当前Dom对象
+event.pageX:
+event.pageY:
+event.stopPropagation():阻止事件冒泡
+event.preventDefault():阻止默认行为
+event.type:事件类型click,dbclick
+event.which:鼠标的按键类型:左1 中2 右3
+event.keyCode:
+
+链式编程:
+	end():让链返回第一个
+	
+隐式迭代
+	会自动迭代执行jQuery选择出来所有的Dom元素的操作
+	如果获取的是多元素的值，默认返回的是第一个元素的值
+	
+元素.each(fun(index,ele)):	
+	
+动画
+	显示/隐藏：
+		show(毫秒/slow/fast/normal/fun)
+		hide()
+	滑动：
+		slideToggle(毫秒):切换
+		slideDown(毫秒):下拉
+		slideUp(毫秒):上拉
+	淡入淡出
+		fadeIn(毫秒):淡入
+		fadeOut(毫秒):淡出
+		fadeToggle(毫秒):淡入淡出切换
+		fadeTo(速度/不透明度/函数):设置不透明度
+	自定义动画
+		animate({属性:值},速度):
+		animate({属性:值},速度,fun(){前面的动画完成后，开始后面的动画}):
+		is(":animate"):判断动画是否处于动画状态
+	停止动画
+		stop(true立即停止动画[,true立即完成动画]):
+
+
+		
+ajax
+	容器.load("url 元素选择器"[,{key:value}][,fun(responseText,testStatus,XMLHttpRequest)]):	
+	$.get(url,[,{name:value}][,fun(data,textStatus)],[,type]):只有当response为success时调用fun，type:服务器返回的内容格式(xml,html,script,json,text,_default),data:返回的内容，可以是xml文档，json文件，html片段
+	$.post(url,[,{name:value}][,fun(data,textStatus)],[,type]):
+	$.getJSON('url',function(data)):加载json文件,data:返回的数据,可用于jsonp
+	$.each(data,fun(index,value)):遍历data(数组/对象)
+	$.ajax({
+		url:"",
+		type:"GET/POST",
+		data:{}/""/$("form/表单元素").serialize()/$("form/表单元素").serializeArray()[json],
+		dataType:"xml/html/json/script",
+		success:fun(){},
+		error:fun(){},
+		timeout:number,
+		beforeSend:fun(XMLHttpRequest),//发送请求前可以修改XMLHttpRequest对象的函数，如添加http头
+		complete:fun(XMLHttpRequest,textStatus)//请求完成(成功/失败)后调用
+	}):
+	
+	$.param():对数组或对象按照key/value进行序列化。var obj={a:1,b:2};var k=$.param(obj);输出a=1&b=2
+	全局函数：
+		ajaxStart(fun):只要有ajax请求开始就调用，全局函数
+		ajaxSend(fun):ajax请求发送前执行
+		ajaxStop(fun):只要有ajax请求结束就调用，全局函数
+		ajaxComplete(fun):ajax请求完成时执行
+		ajaxSuccess(fun):ajax请求成功时执行
+		ajaxError(fun):ajax请求发生错误时执行
+		
+	如果想使ajax请求不受全局方法的影响，可以在使用$.ajax()方法时，将global设置为false
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

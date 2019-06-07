@@ -1,0 +1,58 @@
+xhr
+onreadystatechange()
+	readyState
+	status
+open()
+	setRequestHeader()
+send()
+
+var xhr = null;
+if(window.XMLHttpRequest){
+	xhr = new XMLHttpRequest();
+}else{
+	xhr = new ActiveXObject("Microsoft.XMLHTTP");
+}
+xhr.onreadystatechange = function(){
+	if (xhr.readyState(0-4) == 4){
+		if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+			var data = xhr.responseText/responseXML;//json
+		}else{
+			alert("Request was unsuccessful: " + xhr.status);
+		}
+	}
+}
+xhr.open('get/post','./check.php?name=encodeURIComponent(name)&',true);
+xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.send(null[get]/"name=value&name2=value2"[post]);
+
+字符串>json
+	JSON.parse(str);
+json>字符串
+	JSON.stringify(json);
+
+jquery
+$.ajax({
+	url:'',
+	type:'',
+	dataType:'',
+	data:{},
+	success:function(data){
+	
+	},error:function(){
+	
+	}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+

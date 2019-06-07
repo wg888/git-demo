@@ -1,0 +1,532 @@
+引入方式
+	1.文件调用式
+		代码位于单独的js文件中
+	2.嵌入式
+		使用<script></script>标签
+	3.事件定义式：在事件定义时直接写js
+变量
+	用var声明，用来储存任何类型的数据
+
+
+基本类型
+	基本类型值：typeof(变量):查询基本类型，返回:undefined/number/string/boolean/object(null)/function
+		数值(Number):
+			常量：
+				NaN(非数值)
+				最大值:Number.MAX_VALUE(Infinity（正无穷）)
+				最小值:Number.MIN_VALUE(-Infinity（负无穷）)
+			转换函数：Number(参数)(+/-/*/‘/’/%效果一致)忽略前导空格
+				Number:自身
+				String:""=0,"数值"=数值(忽略前导0)，其他=NaN
+				Boolean:true=1,false=0
+				undefined:NaN
+				null:0
+				Object:先调用对象的valueOf()，若返回NaN，继续调用toString()
+
+				parseInt("待转换的参数",基数):忽略前导空格.解析到一个无效的数字为止.若为""或没有数字，则返回NaN.
+				parseFloat("待转换的参数"):忽略前导空格.解析到一个无效的浮点数为止。第一个小数点是有效的.如果可解析为整数,则返回整数
+				
+		字符串(String):
+			var str = "abc";
+			属性：
+				length:字符串的长度
+			转换函数：
+				String(参数):任何类型转为字符串(+"")
+					如果值有toString()，则调用该方法（没有参数）
+					null:"null"
+					undefined:"undefined"
+				toString([基数]):null和undefined没有
+				
+					
+		布尔(Boolean):true/false
+			转换函数:Boolean(参数)(!!)(!与Boolean相反)
+							true		false
+				Number:		非0数值		0和NaN
+				String:		非空字符串	""(空字符串)
+				Boolean:	true		false
+				Undefined:	不适用		undefined
+				Object:		非null对象	null
+			操作符：&&||!!(与或非)
+				&&:不能将undefined/null进行&&操作
+				||：不能将undefined/null进行&&操作
+				
+		未定义(Undefined):变量声明了，但没有初始化或变量没有声明
+	引用类型的值:变量 instanceof 对象类型(原型链)
+		对象
+			内置对象
+				Global/window 对象this	(全局作用域)
+					方法：
+						isNaN(数字/字符串):非数为true
+						isFinite():是否为最大最小值
+						parseInt():
+							"":NaN
+							直到不是数字
+						parseFloat():
+							直到第一个小数点之后不是数字为止
+							整数：整数
+						encodeURI():对URI进行编码，除了空格之外的其他字符都原封不动
+						decodeURI()
+						encodeURIComponent():替换所有非字母数字字符
+						decodeURIComponent()
+						eval("将此字符串当作命令执行"):
+						
+						对话框：
+							警告框alert();
+							确认框confirm()
+							输入框prompt(str)
+							console.log();
+							console.warn():控制台警示
+							console.error:控制台错误提示
+						定时器
+							一次性定时器：setTimeout(exp,time):等待time毫秒后执行exp，返回定时器对象
+							停止一次性定时器:clearTimeout(定时器对象)
+							周期性定时器:setInterval(exp,time):间隔time毫秒执行一次exp,循环执行，返回定时器对象
+							停止周期性定时器:clearInterval(定时器对象)
+						打开网页
+							var win = open("网址"[,"name","features","replace"])：
+								_self:替换当前页面
+								_blank:在新窗口中打开网址
+									height,width,left,top
+							win.opener:打开窗口的主窗口对象
+							win.moveTo(0,0);
+							win.close();
+							win.closed：窗口是否关闭
+							frames集合:保存着每个框架自己的window对象。通过数值索引或框架名称可以访问对应的window对象。每个window对象都有一个name属性(框架的名称)(必须是以window.open()打开的窗口)。
+							top.frames[0]/top.frames['topFrame']
+							self:始终指向window。可以与window对象互换使用
+							parent:父对象始终指向当前框架的直接上层框架。
+					属性：
+						非数字:NaN
+						undefined
+						Infinity
+	
+					浏览器对象：navigator
+					屏幕对象：screen
+					地址栏对象：location
+						属性href:当前窗口，正在浏览的网页地址
+						方法reload:刷新网页
+					历史对象：history
+						length:浏览器历史列表中的URL数量
+						forward():前进
+						back():后退
+						go(num):正数前进num次，负数后退num次
+					文档对象：document
+						document.writer()：文档输出
+					(Dom) event	
+					
+				Function:局部作用域
+					模仿块级作用域：
+						(function(){
+						
+						})();
+					function fun(形参){方法体}					//函数声明提升
+					var fun = function(形参){函数体}			//值函数(匿名函数)
+					var fun = new Function("形参","函数体");
+					var global = function(){					//立即调用该函数
+						return this;
+					}();
+						函数名仅仅是指向函数的指针
+					属性：
+						this:调用者(对象)
+						arguments:实参对象
+							arguments.callee:当前执行的函数
+							arguments.callee.caller:当前函数的调用者
+							arguments.length:实参个数
+							length:形参个数	
+						prototype:保存函数的可以供其他实例共享的所有实例函数。(原型对象prototype，他有constructor属性)
+							每创建一个函数，该函数就会有prototype属性(__prototype__)，指向原型对象。
+							函数prototype>原型对象constructor(prototype)>函数
+						
+					方法：
+						function.apply(thisObj[, argArray]):调用一个对象的一个方法，用另一个对象替换当前对象。例如：B.apply(A, arguments);即A对象应用B对象的方法。
+						function.apply(obj[, argArray]):设置该方法的调用对象(obj)
+						function.call(thisObj[, arg1[, arg2[, [,...argN]]]]):调用一个对象的一个方法，用另一个对象替换当前对象。例如：B.call(A, args1,args2);即A对象调用B对象的方法。
+							apply：最多只能有两个参数——新this对象和一个数组argArray。如果给该方法传递多个参数，则把参数都写进这个数组里面，当然，即使只有一个参数，也要写进数组里。如果argArray不是一个有效的数组或arguments对象，那么将导致一个TypeError。如果没有提供argArray和thisObj任何一个参数，那么Global对象将被用作thisObj，并且无法被传递任何参数。
+
+							call：它可以接受多个参数，第一个参数与apply一样，后面则是一串参数列表。这个方法主要用在js对象各方法相互调用的时候，使当前this实例指针保持一致，或者在特殊情况下需要改变this指针。如果没有提供thisObj参数，那么 Global 对象被用作thisObj。 
+							var values = [1, 2, 3, 4, 5, 6, 7, 8];
+							var max = Math.max.apply(Math, values);
+						bind(形参对象):返回一个函数的实例，该实例的this值就是bind的形参。返回绑定了一个对象的函数，下次调用该函数时，this就为形参对象。
+										为一个方法绑定一个对象
+							window.color = "red";
+							var o = { color: "blue" };
+							function sayColor(){
+								alert(this.color);
+							}
+							var objectSayColor = sayColor.bind(o);
+							objectSayColor(); //blue
+							在这里， sayColor()调用 bind()并传入对象 o，创建了 objectSayColor()函数。 objectSayColor()函数的 this 值等于 o，因此即使是在全局作用域中调用这个函数，也会看到"blue"。
+					
+					
+				Object：所有它的实例的基础，所具有的任何属性和方法也同样存在于更具体的对象中
+					constructor:用于创建当前对象的函数
+					Object.getPrototypeOf(对象):获取实例对象的原型对象
+					.prototype.isPrototypeOf(object)：判断传入对象是否是对象的原型
+					hasOwnProperty("属性名称"):检查传入属性在当前对象实例中(不是在实例的原型中)是否存在
+					in 操作符会在通过对象能够访问给定属性时返回 true
+					delete 属性名:删除实例对象的属性
+					toLocaleString()：返回对象的与执行环境的地区对应的字符串表示
+					toString()：返回对象的字符串表示
+					valueOf()：返回对象的字符串、数值或布尔值表示
+					
+					
+					每当代码读取某个对象的某个属性时，都会执行一次搜索，目标是具有给定名字的属性。搜索首先从对象实例本身开始。如果在实例中找到了具有给定名字的属性，则返回该属性的值；如果没有找到，则继续搜索指针指向的原型对象，在原型对象中查找具有给定名字的属性。如果在原型对象中找到了这个属性，则返回该属性的值。也就是说，在我们调用 person1.sayName()的时候，会先后执行两次搜索。
+					
+					
+					
+					创建对象的方式：工厂,构造函数,原型模式
+						var obj = {name:value};//字面量形式
+						var obj = new Object(Number/String/Boolean/);//用Object创建		传入哪种类型的参数，就会创建哪种类型的实例
+							obj.name/obj["name"/变量]
+						工厂模式：返回一个对象，缺点：无法知道一个对象的类型
+							function createPerson(name,age){
+								var o = new Object();
+								o.name = name;
+								o.age = age;
+								o.sayName = function(){
+									alert(this.name);
+								};
+							}
+						构造函数模式：缺点：在创建对象时，每个函数都要在每个实例上重新创建一遍。
+							function Person(name,age,job){
+								this.name = name;
+								this.age = age;
+								this.job = job;
+								this.sayName = function(){
+									alert(this.name);
+								}
+							}
+							var person1 = new Person("Leo",25,"Software Engineer");
+							var person2 = new Person("Tom",23,"Doctor");
+							person1.constructor == Person		//true
+							person2.constructor == Person		//true
+							person1 instanceof Object/Person	//true
+						原型模式：
+							创建的每个函数都有一个prototype(原型属性)，是一个指针，指向一个原型对象(该对象包含了特定类型的所有实例的属性和函数)。
+							function Person(){}
+							Person.prototype.name = "Leo";
+							Person.prototype.age = 20;
+							Person.prototype.job = "Software Engineer";
+							Person.prototype.sayName = function(){
+								alert(this.name);
+							};
+							var person1 = new Person();
+							person1.sayName();	//"Leo"
+							var person2 = new Person();
+							person2.sayName();	//"Leo"
+							alert(person1.sayName == person2.sayName);	//true
+							
+				基本包装类型：基本类型可以有方法和属性，实质是js在后台会自动执行创建基本类型的包装类对象，调用完方法完后，再销毁了。
+					(1) 创建 String 类型的一个实例；
+					(2) 在实例上调用指定的方法；
+					(3) 销毁这个实例。
+					可以将以上三个步骤想象成是执行了下列 ECMAScript 代码。
+					var s1 = new String("some text");
+					var s2 = s1.substring(2);
+					s1 = null;
+						
+					Number
+						var numberObject = new Number(10);
+						toFixed(2):返回数值指定的小数位字符串表示，会自动舍入var num = 10;num.toFixed(2); //"10.00"
+					String
+						var stringObject = new String("some text");
+						length:字符串的长度
+						charAt():
+						concat("要连接的字符串1","string2"):
+						slice():与substring()相似
+						substring(startIndex,endIndex):
+						substr(startIndex,charLength):
+						indexOf("要搜索的字符串",startIndex):
+						lastIndexOf("从尾开始找",startIndex):
+						trim():删除首尾空字符
+						toLowerCase()/toLocaleLowerCase():
+						toUpperCase()/toLocaleUpperCase():
+						match(正则表达式/RegExp对象):本质上与调用 RegExp 的 exec()方法相同,返回一个数组
+							数组的第一项是与整个模式匹配的字符串，之后的每一项（如果有）保存着与正则表达式中的捕获组匹配的字符串
+						search(正则表达式/RegExp对象):返回字符串中第一个匹配项的索引，没有则返回-1
+						replace(正则表达式/RegExp对象,"用来替换的字符串"):
+							var text = "cat, bat, sat, fat";
+							var result = text.replace("at", "ond");
+							alert(result); //"cond, bat, sat, fat"
+							result = text.replace(/at/g, "ond");
+							alert(result); //"cond, bond, sond, fond"
+					Boolean:建议永远不要使用
+						var booleanObject = new Boolean(true);	
+					
+				Array：可以省略new
+					var arr = new Array();
+					var arr = new Array(length);
+					var arr = new Array(value1,value2,...);
+					var arr = [];
+					var arr = ["value1","value2"]
+					arr.length:可以控制数组的长度
+					方法：
+						Array.isArray(value)[E5]:确定value是否为数组(跨域使用)
+						join("分隔符")
+						push(value1,value2):将value推入数组中，返回修改后的数组长度
+						pop():从数组末尾移除最后一项，返回移除的项
+						shift():移除并返回数组的第一项
+						unshift(value1,value2):在数组前端添加多项，返回新数组的长度
+						reverse:反转数组项的顺序并排序
+						sort(比较函数):数组排序
+							function compare(value1, value2) {
+								if (value1 < value2) {
+									return 1;
+								} else if (value1 > value2) {
+									return -1;
+								} else {
+									return 0;
+								}
+							}
+						concat(要连接的数组):连接数组，返回一个新数组
+						slice(startIndex[,endIndex]):截取数组
+						indexOf(要查找的项):要查找的项所在数组的位置
+						lastIndexOf(从后往前查找项):
+				
+				Math
+					min():最小值
+					max():最大值
+					random():返回大于等于 0 小于 1 的一个随机数
+					Math.ceil()执行向上舍入，即它总是将数值向上舍入为最接近的整数；
+				 	Math.floor()执行向下舍入，即它总是将数值向下舍入为最接近的整数；
+				 	Math.round()执行标准舍入，即它总是将数值四舍五入为最接近的整数
+					alert(Math.ceil(25.9)); //26
+					alert(Math.ceil(25.5)); //26
+					alert(Math.ceil(25.1)); //26
+				Date
+					var date = new Date(直接传入毫秒数/日期[可选]);//获取当前日期时间
+					Date.parse():接收一个表示日期的字符串参数，返回相应的日期的毫秒数，若不能表示日期，则返回NaN
+					Date.UTC():
+					Date.now():取得调用此方法时的时间/不支持的浏览器用+new Date()
+					toUTCString():
+				RegExp
+					var regExp = new RegExp("正则表达式",["标识"]);
+					var regExp = / pattern【元字符需转义】 / flags ;
+						flags:
+							g(全局)：将应用于所有字符串，而非第一个匹配项
+							i:不区分大小写
+							m:多行
+					exec(str):
+						普通模式：从str里找出reg匹配的第一个字串
+						全局模式：第n次调用从str里找出和reg匹配的第n个字串
+					test(str):判断str里是否包含和reg匹配的字串
+				
+				
+				Error
+		空:Null
+			空对象指针null(object类型的)
+
+		作用域链:执行环境有权访问的所有变量和函数(相当于一个变量和函数的记录表)
+			函数中的变量有作用域
+			if和for中没有块级作用域
+		
+		没有块级作用域：
+			if(Boolean())
+		
+==/!=:先转换成数值后比较
+	Number：
+		null==undefined	true
+		只要有NaN:false
+		NaN!=NaN	true
+	字符串:先将字符串转为数值
+	boolean
+		true:1
+		true:0
+	Object:是否指向同一个对象
+		
+	
+===/!==:仅比较不转换
+	全等：不转换前相等才相等
+	
+				
+
+事件:指页面元素状态改变，用户在操作鼠标或键盘时触发的动作
+	鼠标事件
+		单击							onClick
+		双击							onDblClick
+		按下							onMouseDown
+		释放							onMouseUp
+		移动							onMouseMove
+		经过							onMouseOver
+		离开区域						onMouseOut
+	键盘事件					
+		按下							onKeyDown
+		释放							onKeyUp
+		按下释放						onKeyPress
+	状态改变		
+		获取焦点						onFocus
+		失去焦点						onBlur
+		页面加载完马上发生				onLoad
+		失去焦点且内容改变				onChange
+		选择input/textarea中的文本		onSelect
+		重置form						onReset
+		提交form(return true/false)		onSubmit
+事件对象：event对象
+	event对象:事件触发后将会产生一个event对象，event对象记录了事件发生时的鼠标位置，按鼠标，键盘等信息。系统会自动传递给事件函数的第一个参数(兼容性)
+		事件 = function(event){
+					event=window.event||event;
+				}
+		var obj = e.srcElement || e.target
+	常用属性:PageX/PageY/cancelBubble
+	事件处理机制：冒泡机制
+		取消事件的冒泡
+			event.cancelBubble = true;
+			event.stopPropagation();
+	void运算符：
+		<a href="javascript:void(0);" onClick="alert('execute is code');" /a>
+		只执行一段js代码，不进行页面跳转，还保留超链接的样式
+
+
+document对象
+	节点名称:nodeName
+	节点类型:nodeType
+	节点内容:
+		innerText/textContent(兼容性):获取/设置纯文本内容
+		innerHTML:获取/设置含HTML的代码文本
+	节点属性：
+		方法：
+			getAttribute("属性名"):根据属性名获取属性的值
+			setAttribute("属性名","值"):根据属性名修改属性的值
+			removeAttribute("属性名):删除属性
+		属性：
+			普通属性：节点对象.节点属性
+			css属性(限标签中的style):节点对象.style.属性
+			注：对于“-”要转换为大写：border-top>borderTop
+				对于通过className获取的对象，要用节点对象.className的方式
+		获取运行时的属性
+			标签对象.currentStyle[属性]
+			getComputedStyle(节点对象，伪类对象/null)[属性]
+			function getStyle(obj,attrStr){
+				return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,null)[attr];
+			}
+	增删节点
+		增加节点
+			创建节点：createElement("标签名")
+			创建文本节点:createTextNode("内容")
+			向父节点追加一个字节点:父节点.appendChild(子节点)
+		删除节点
+			父节点.removeChild(子节点)
+		获取节点
+			通过id获取：getElementById("id")
+			name:getElementByName("name")
+			className(非标准):getElementByClassName("className")
+			标签获取：getElementByTagName("标签")
+			通过层次获取
+				父亲:parentNode
+				孩子:childNode(含空白节点)
+				兄弟:某节点.父亲.孩子们[索引]
+				
+	让动作静止
+	<a href="javascript:;"></a>
+	<a href="javascript:void;"></a>
+
+
+
+
+
+
+
+
+
+				
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

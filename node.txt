@@ -1,0 +1,182 @@
+NVM
+	Node Version Manager(Node的版本管理工具)
+在D:\npmFiles\nvm文件夹中按住shift加右键，点击"在此处打开命令行窗口"
+输入:nvm确认nvm安装成功
+输入安装:nvm install 8.11.4 64-bit
+	nvm install <version> [arch]	安装
+	nvm uninstall <version>			卸载
+	nvm list 						查看已经安装的版本
+输入:nvm use 8.11.4
+确认node安装成功输入:node -v
+
+node应用
+	//创建一个http服务器
+	var http = require('http');
+	//创建一个服务
+	var server = http.createServer(function(request,response){
+		var requestUrl = request.url;
+		switch(requestUrl){
+			case '/signin':
+				//请求登录页面
+				signin(request,response);
+				break;
+			case '/post':
+				//提交表单
+				post(request,response);
+			break;
+			default:
+				response.writerHead(404, {});
+				response.end();
+			break;
+		}
+	});
+	//启动服务
+	server.listen(8080,function(error){
+		console.log('成功监听8080端口');
+	});
+	function signin(request,response){
+		response.writerHead(200,{'Content-Type':'text/html'});
+		console.log('请求登录页面');
+	})
+	var querystring = require('querystring');
+	function post(request,response){
+		console.log('表单提交');
+		var postData = '';//http传递的都是字符串
+		request.on('data',function(part){
+			postData += part;
+		});
+		request.on('end',function(){
+			console.log(postData);
+			//username=admin&password=admin
+			var obj = querystring.parse(postData);//将字符串转换为对象
+			console.log(obj);
+		});
+		
+		response.end();
+	})
+
+
+
+NPM
+Node Package Manager(Node依赖包管理工具)
+npm的淘宝镜像安装cnpm:npm install -g cnpm --registry=https://registry.npm.taobao.org
+cnpm init //初始化操作，给项目添加一个配置文件package.json
+	由于需要记录项目依赖哪些包，所有需要一个配置文件"package.json",可以通过npm init命令生成
+cnpm --yes	//删除默认配置
+cnpm install xxx -g(安装全局包) 一般安装的是工具，每一个地方都能使用
+cnpm install --save-dev gulp
+cnpm uninstall xxx -save
+	--save将安装的包名字和包版本记录到配置文件package.json中的dependencies节点中
+		--save-dev:开发依赖(开发时用的)
+		项目依赖:项目上线时用的
+		
+
+Bower
+web应用程序依赖管理工具:用来管理项目中所有的依赖
+bower init
+bower install bootstrap
+
+Gulp
+自动化工具
+	less>css
+	coffeescript>js
+	css压缩
+	js混淆
+	html压缩
+	img尺寸优化
+
+gulp的包既包含工具，也包含编程的API
+
+官网翻译:www.gulpjs.com.cn
+全局安装gulp:cnpm install --global gulp
+
+1.在项目跟目录安装:cnpm install --save-dev gulp
+2.在项目根目录下创建一个名为:gulpfile.js的文件
+	/**
+	 * gulp的主文件，用于注册任务
+	 */
+	//此处代码都是由node执行
+	var gulp = require('gulp');//载入gulp模块
+	var less = require('gulp-less');//载入编译less模块
+	var cssnano = require('gulp-cssnano');//载入最小化css文件模块
+	var concat = require('gulp-concat');//载入合并模块
+	var uglify = require('gulp-uglify');//载入混淆模块
+	//注册一个任务,当gulp执行这个dist任务时会自动执行该函数 (gulp dist)
+	gulp.task('dist', async()=>{
+		console.log("hello world！");
+		//src('filePath'):取一个文件
+		//pipe():管道，将需要的操作(合并，压缩，复制等)传递进去
+		//gulp.src('src/index.html').pipe(gulp.dest('dist/'));
+			
+		//watch('filePath',callBackFun()):监视，当src/index.html文件发生改变时执行callBackFun()
+		gulp.watch('src/index.html',async()=>{
+			gulp.src('src/index.html').pipe(gulp.dest('dist/'))
+			.pipe(browserSync.reload({stream:true}));
+		});
+		//less>css压缩合并
+		gulp.watch('src/style/*.less',async()=>{
+			gulp.src('src/style/*.less')
+			.pipe(less())//该环节过后就是css
+			.pipe(cssnano())
+			.pipe(gulp.dest('dist/css/'))
+			.pipe(browserSync.reload({stream:true}))
+			.pipe(browserSync.reload({stream:true}));
+		});	
+		//gulp.watch(['src/style/*.less','!src/style/_*.less'],async()=>{	!不取
+		//js混淆压缩 合并
+		gulp.task('script',async() =>{
+			gulp.src('src/script/*.js')
+			.pipe(uglify())
+			.pipe(concat('all.js'))
+			.pipe(gulp.dest('dist/script'))
+			.pipe(browserSync.reload({stream:true}));
+		});
+		//图片复制
+		gulp.task('image',async() =>{
+			gulp.src('src/image/*.*')
+			.pipe(gulp.dest('dist/images'))
+			.pipe(browserSync.reload({stream:true}));
+		});
+		//html压缩
+		var htmlmin = require('gulp-htmlmin');
+		gulp.task('html',async() =>{
+			gulp.src('src/*.html')
+			.pipe(htmlmin(collapseWhitespace:true,removeComents:true))//删除空格和注释
+			.pipe(gulp.dest('dist'))
+			.pipe(browserSync.reload({stream:true}));
+		});
+		
+	});
+	//静态服务器
+	var browserSync = require('browser-sync').create();
+	gulp.task('serve', async() =>{
+		browserSync.init({
+			server: true,
+			baseDir: "./"	//静态服务器的跟目录
+		},function(err,bs){
+			console.log(bs.options.getIn(["urls","local"]));
+		});
+	});
+	
+3.执行:gulp dist/style
+
+
+gulp插件
+官网:www.gulpjs.com
+plugins
+搜索gulp-less
+	html压缩:gulp-minify-html
+	css压缩合并:gulp-minify-css/gulp-cssnano(cnpm install gulp-cssnano --save-dev)
+	less编译压缩合并:gulp-less(cnpm install gulp-less)
+	js混淆压缩合并:gulp-uglify
+	合并文件:gulp-concat(cnpm install --save-dev gulp-concat)
+	静态服务器:cnpm install browser-sync gulp --save-dev(网页管理地址:http://localhost:3001)
+
+
+
+
+
+
+
+
+

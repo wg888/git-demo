@@ -1,0 +1,42 @@
+git
+源代码管理工具
+
+管理源代码:让源代码可以追溯，记录每次变更了什么，谁主导了这次变化
+
+下载安装包:PortableGit-2.21.0-64-bit.7z
+git客户端工具:SourceTree
+配置环境变量:
+	新建GIT_HOME:D:\myGit
+	在path后追加:%GIT_HOME%\bin;
+	确认git是否安装成功:cmd>git --version
+	
+git命令
+初始化一个本地git仓储:git init
+	在本地文件夹中添加了一个.git的文件夹，用于记录项目的变更
+查看本地仓储的变更状态:git status
+	第一次查看，显示的是一坨没有被跟踪的文件untracked files
+	
+添加本地暂存(托管)文件:git add 文件名
+	将没有跟踪的文件添加到跟踪列表
+添加本地git忽略清单文件:在代码库文件夹的跟目录添加一个.gitingnore文件，文件记录忽略的文件
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,415 @@
+html5标签
+css层叠样式表
+	标准文档流:
+		html分类：文本级/容器级
+		css分类：行内(并排)块级(宽高)
+	脱离标准文档流:
+		浮动定位
+		清除浮动
+	框模型
+		外边距：margin
+		边框：border
+		内边距：padding
+	引用方式
+		外部样式
+		内部样式
+		内联样式
+	选择器
+		普通选择器
+		伪类选择器
+	实体内容
+		字体：颜色，粗细，尺寸，风格，系列
+		文本：颜色，装饰，缩进，对齐，行高
+		列表：列表标记类型，列表自定义图像标记
+		表格：单元格合并，单元格外边距
+		背景：背景色，背景图	
+
+html标签
+	超链接<a href="链接地址" title="悬停文本" target="_blank是否在新窗口中打开"></a>
+	锚点(name/id):<a name="wdzp"/href="#wdzp" ></a>
+	无序列表:<ul><li></li></ul>
+	有序列表:<ol><li></li></ol>
+	定义列表:dl
+				dt(title)	北京			
+					dd(description)	描述1	dd	描述2
+				dt	上海			
+					dd	描述
+	表格标签<table border="边框1" cellpadding="0单元格内边距" cellspacing="0单元格外边距"> (块)
+				<tr>																		(块)
+					<th>表格标题</th>														(行内)
+					<td rowspan="2跨行" colspan="2跨列"></td>								(行内)
+				</tr>
+			</table>
+	表单标签<form></form>
+		<form action="接收此表单的地址" method="默认get/post">							(块)
+		文本输入框<input type="text" placeholder="默认提示词" />						(行内块)
+		密码输入框<input type="password" placeholder="" />
+		单选框按钮<input type="radio" checked="checked 默认选中" />
+		多选框按钮<input type="checkbox" checked="checked默认选中" />
+		普通按钮<input type="button" value="值" />
+		重置按钮<input type="reset" value="值" />
+		提交按钮<input type="submit" value="值" />
+		上传文件<input type="file" multiple="multiple" />
+		图像<input type="image" src="图片地址" alt="图片加载失败的显示文本" title="鼠标放此处的显示内容" />
+		隐藏框<input type="hidden" value="" />向服务器发送的数据，数据由value设置
+		标签<label for="绑定的id"></label>绑定另一个元素								(行内)
+		
+	下拉框(行内块)
+		<select>
+			<optgroup label="" >
+				<option>选项1</option>
+				<option>选项2</option>
+			</optgroup>
+		</select>
+		
+	文本框<textarea rows="行数" cols="列数" readonly="readonly设置只读">默认显示文本</textarea>
+	图片标签<img src="图片地址" width="" height="" alt="图片加载失败时的显示文本" titile="鼠标放此处的显示内容" />
+	字符实体
+		&lt;<less than
+		&gt;>greate than
+		&copy; 版权
+		&nbsp;non-break spacing 空格
+	html5废弃标签:<font><b><u><i><del><em><strong><hr><br>
+	
+css层叠样式表
+标准文档流：从上到下，子元素能将父元素撑高
+	html分类：文本级/容器级
+		文本级：p,span,a,b,i,u,em		只能放文字，图片，表单元素(流元素，文本)
+		容器级：div,h系列,li,dt,dd		任何东西
+		
+	css分类：行内(并排)块级(宽高)
+		行内元素(并排)(放置小东西)：span,a,b,i,u,em
+		块级元素(宽高)(放置大东西)：div,h系列,p,li,dt,dd
+	
+		行内元素(并排)和块级元素(宽高)
+			行内元素
+				可以与其他行内元素并排
+				不能设置宽高，默认的宽度，就是内容的宽度
+			行内块
+				可以与其他行内元素并排
+				可以设置宽高
+			块级元素
+				独占一行，不能与其他元素并排
+				可以设置宽高(若不设置宽度，则宽度变为父元素的宽度)
+
+		块级元素和行内元素的转换:display:inline/inline-block/block;
+			
+		标准的div+css:div p h1 span a img ul ol dl input
+		
+		
+		
+脱离标准文档流:定位(并排宽高)浮动的子元素不能撑高没有浮动的父元素
+	定位：
+		浮动定位
+		绝对定位
+		固定定位
+	浮动(一起浮)：脱标，贴边，字围，收缩
+		浮动的元素脱标
+		浮动的元素互相贴靠
+		浮动的元素有字围效果
+		收缩：若没有宽度，则自动收缩为文字的宽度
+	相对定位:不脱标，老家留坑，形影分离
+		position:relative;//先声明要相对定位了
+		left:100px;
+		top:150px;
+		微调元素位置。让元素相对自己原来的位置。
+		
+		绝对定位的参考，子绝父相
+	绝对定位
+		position:absolute;
+		top:100px;
+		left:100px;
+		width:100px;
+		height:100px;
+		绝对定位的盒子，是脱离标准文档流的。所以，所有的标准文档流的性质，绝对之后都不遵守了。
+		绝对定位之后，标签就不区分所谓的行内元素，块级元素了。不需要display:block;就可以设置宽高了。
+	固定定位
+		position:fixed;
+	堆叠顺序(z-index):只对已定位元素有效，数字越大，越靠近我们，默认为0。浮动不能用
+	其他补充:
+		显示滚动条：overflow:scroll/auto(强制/自动)
+		鼠标图标：cursor:pointer(手形)
+
+	浮动的清除
+		给父元素加高（有高度的盒子才能关住浮动）容器里面有浮动，如div中有浮动的li，则下一个容器中的浮动元素会去贴第一个浮动的元素
+			div{
+				height:xx px;
+			}
+			li{
+				float:left;
+				width:90 px;
+				height:40 px;
+			}
+			<div>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</div>
+			<div>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</div>
+		clear:both;margin会失效
+			.div2{
+				clear:both;
+			}
+			li{
+				float:left;
+				width:90 px;
+				height:40 px;
+			}
+			<div>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</div>
+			<div class="div2">
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</div>
+		隔墙法：<div class="cl h18"></div> 隔开了两部分的浮动，但第一个div还是没有高
+		内墙法：在最后添加<div class="cl h18"></div>框随内容扩大
+			li{
+				float:left;
+				width:90 px;
+				height:40 px;
+			}
+			.cl{
+				clear:both;
+			}
+			.h18{
+				height:18px;
+			}
+			<div>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<div class="cl h18"></div>
+			</div>
+		overflow:hidden;溢出隐藏
+			一个父亲不能被自己浮动的儿子撑出高度，但是只要给父亲加上overflow，那么父亲就能被儿子撑出高了。
+			.div1{
+				overflow:hidden;
+			}
+			li{
+				float:left;
+				width:90 px;
+				height:40 px;
+			}
+			<div class="div1">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+			</div>
+			<div class="div2">
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</div>
+		总结：
+			1.浮动的元素，只能被有高度的盒子关注。如果盒子内部有浮动，且盒子有高，那么浮动不会互相影响。但是工作中，不会给所有的盒子加高度。所以需要找到不给盒子加高度，但是也能清除浮动的方法。
+			2.给盒子增加clear:both;表示自己的内部元素，不受其他盒子的影响
+			3.隔墙法：在两部分浮动元素中间，建一个墙。隔开两部分浮动，让后面的浮动元素，不去追前面的浮动元素。墙用自己的身体当作了间隙。
+			但是第一个div还是没有高度。
+			4.内墙法：不仅仅能让后面的p不去追前部分的p，并且可以把第一个div撑出高度。这个元素的背景，边框就能够根据p的高度来撑开了。
+			5.overflow:hidden;
+				能够让margin生效		
+		
+		
+框模型(父子用padding，兄弟用margin)
+	外边距：margin(-top/right/bottom/left)
+			标准文档流margin的塌陷现象:竖直方向的margin不叠加，以较大的为准。
+			标准文档流有宽度的盒子居中:margin:0 auto;	> margin-left/right:auto;
+	边框:border(-top/right/bottom/left)
+			border:width style color;
+	内边距:padding(-top/right/bottom/left)
+		行内元素	尽量不用	上下的padding和margin
+	总宽=width(内容的宽)+2padding(左右的padding)+2border(左右的border)+2margin(左右的margin)
+	总高=height(内容的高)+2padding(上下的padding)+2border(上下的border)+2margin(上下的margin)
+	
+	
+	儿子用margin-top踹父亲，父亲没有border，结果父亲也下来了。
+	儿子用margin-top踹父亲，父亲有border，结果达到了我们的目的。
+	如果父亲没有border，那么儿子的margin实际上踹的是“流”，踹的是这“行”，所以父亲整体也掉下来了。
+	关于IE6的3px bug
+		不用管，不允许用儿子踹父亲。
+		
+	关于margin的IE6兼容问题
+	IE6双倍margin bug
+	
+	当出现连续浮动的元素，携带和浮动方向相同的margin时，队首的元素，会双倍margin。
+	解决方案：
+		1.使浮动的方向和margin的方向，相反。
+			所以，浮动的方向和margin的方向相反。
+		2.单独给队首的元素，写一个一半的margin
+	
+
+浏览器兼容问题
+	1.IE6不支持小于12px的盒子。
+		解决方法：将盒子的字号，设置小(小于盒子的高)，如：_font-size:0px;
+	
+	IE6留了一个后门，只要给css属性之前，加上一个'_'，这个属性就是IE6的专有属性。
+		如：_background-color:green;
+	2.IE6不支持overflow:hidden;来清除浮动的。
+		解决：
+			overflow:hidden;
+			_zoom:1;
+					
+引用方式
+	外部样式表：<link rel="stylesheet" type="text/css" href="xxx.css" /> (优先级最低)
+	内部样式表：在<head>标签内用<style></style>表示
+	内联样式：在html元素内部写style属性（优先级最高）
+	
+选择器
+	ie6面试要问
+	做项目到ie8
+	通配符*：所有元素，效率不高，标签越多，效率越低，页面上不能出现这个选择器
+	类选择器.(可以重用，公共类)一个标签可以有多个类选择器，每个标签去选取自己需要的类
+		1.不要试图用一个类把某个标签的所有样式写完。这个标签要多携带几个类，共同造成这个标签的样式。
+		2.每一个类要尽可能的小，有”公共“的概念，能够让更多的标签使用
+	类上样式，id上行为
+
+	通用选择器
+		标签(元素)选择器
+		id选择器：#id(个性)
+		类选择器：.类名(共性)
+		并集/分组(和)选择器：用","分隔选择器
+		交集选择器：h2.special 即是h2标签，又是special标签
+			一般都是以标签开头
+			可以连交：
+			h3.special.zhongyao{
+			}
+			这个写法是IE7开始兼容的，IE6不兼容
+			浏览器兼容问题，集中在IE6,IE7上
+	层次选择器
+		>儿子(css3)(ie7开始兼容,ie6不兼容)
+		空格	子孙后代	空格.div1 p 就是div1的后代所有的p。
+			意义：共性和特性的平衡。当要把某一个部分的所有的什么，进行样式改变，就要想到后代选择器
+		
+		
+	伪类选择器
+		超链接的美化:lvha
+			:link{}未点击
+			:visited{}已点击过
+			:hover{}放上去
+			:active{}点住不松开
+			
+			a标签在使用的时候非常难，因为不仅仅要控制a这个盒子，也要控制它的伪类。我们一定要将a标签写在前面，:link,:visited,:hover这些伪类写在后面
+			a标签中，描述盒子，伪类中描述文字的样式，背景。
+			a不继承text,font.因为a自己有一个伪类的权重
+		
+		:focus{}获取焦点时
+		:first-letter未首字母添加样式
+		:first-line为首行添加样式
+		
+		
+	css3选择器
+		序选择器:ie8开始兼容
+			选择第一个:	:first-child
+			选择最后一个: :last-child
+		下一个兄弟选择器+:可以选中相邻的同级的一个元素	(ie7开始兼容)
+		
+	css的继承性(inherited from div)和层叠性
+	继承性:从大继承到最小的元素 
+		有一些属性,当给自己设置的时候,自己的后代都继承上了
+		能继承:color,text开头的,line,font
+		关于文字样式都能,关于盒子,定位,布局的都不能继承
+
+		如果页面的文字都是灰色,都是1px,那就可以用继承性
+
+	层叠性:css处理冲突的能力
+		当选择器选择上了某个元素的时候,要统计权重:
+		数一下id选择器的数量,类选择器的数量,标签选择器的数量
+			1个id选择器,1个类选择器,1个标签选择器:(权重最高)
+				记作:1,1,1
+			1个id选择器,0个类选择器,3个标签选择器:
+				记作:1,0,1
+
+		如果权重一样,谁后面就是谁
+		继承来的,权重为0
+		如果都是0,那么谁描述的近,就是谁(都是继承来的,谁近听谁的)
+		
+	总结:
+		1.先看有没有选中,如果选中了,那么以(id数,类数,标签数)来计权重.谁大听谁的.如果都一样,谁后听谁的
+		2.如果没有选中,那么权重是0,此时标签的数量一点都没有了.如果大家都是0,那么别数标签数量了,别看谁在下面,因为只有一个能影响,就近原则.
+
+	k:v!important给一个属性提高权重，这个属性的权重无穷大
+	font-size:60px !important;
+		!important提升的是一个属性
+		!important无法提升继承的权重，该0还是0
+		!important不影响就近原则
+
+		!important做站的时候不允许使用，因为会让css写的很乱	
+		
+	
+实体内容
+	字体：颜色，尺寸，粗细，风格，系列
+		颜色：color:red/rgb;
+		大小：font-size:xxpx;
+		粗细：font-weight:bold/normal;
+		风格：font-style:italic/normal;
+		系列：font-family:"楷体";Arial,Times New Roman,微软雅黑(Microsoft YaHei)，宋体(SimSun)，黑体
+		系列选择优先级:font-family:"微软雅黑","微软雅不黑",sans-serif（无衬线）/serif（有衬线）
+		font将font-size/ling-height font-family合三为一
+		text-shadow:3px 3px 3px 3px;
+	文本:颜色，装饰，缩进，对齐，行高
+		颜色：color:red;
+		装饰：text-decoration:none/overline/line-through/underline
+		缩进：text-indent:xxpx/em;
+		对齐：text-align:xxpx;
+		行高：line-height:
+		字符间隔:letter-spacing:normal/值;
+		字间隔：word-spacing:normal/值;
+	列表：
+		列表标记类型：list-style-type:none/square
+		列表自定义图像标记：list-style-image:url(地址)
+	表格：
+		边框合并border-collapse:collapse(融合)/separate(分离)默认
+		单元格外边距border-spacing: px(仅在border-collapse:separate下用)
+	背景：背景色，背景图
+		背景色：background-color:red;
+		背景图
+			背景图地址:background-image:url(图片地址)
+			背景图平铺方式:background-repeat:repeat/no-repeat/repeat-x/repeat-y
+			背景图位置:background-position:top/right/bottom/left/center(水平 垂直)
+			背景图防滚动:background-attachment:fixed(固定)/scroll(默认滚动)
+	
+	css中，任何文本都有行高。为了严格保证字在行里居中，约定行高，字号，一般都是偶数
+					
+					
+					
+					
+					
+					
+事件源	事件	事件处理程序
+事件源
+	要触发的对象	手	用手去触发的	谁触发了
+	一般情况下是名词
+	发起者
+事件
+	怎么触发的这个事情	按
+	一般情况下是动词 点击	鼠标经过	按键盘
+	
+事件处理程序
+	发生了什么事	灯亮了
+
+事件源.事件=function(){
+	事件处理函数
+}
+
+入口函数
+	window.onload=function(){
+	
+	}
+当页面加载完毕之后，执行
+
+
+
+
+	
+
+
+
+	
